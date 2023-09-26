@@ -8,18 +8,16 @@
   border: 1px solid black;
 }
 
-.nav {
+.formContainer {
   display: flex;
-  flex-direction: column;
-  justify-content: right;
-}
-
-.headerContainer {
-  display: flex;
-  background-color: red;
-}
-
-.account-icon {
   justify-content: center;
-  color: red;
+  align-items: center;
+  height: 100vh;
+}
+
+.formItem {
+  width: 50%;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid black;
 }

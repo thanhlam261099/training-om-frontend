@@ -1,12 +1,26 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import { FlexContainer } from "./auth/styles/Login.style";
+import User from "./user";
+import { Breadcrumb, Layout, Menu, theme } from "antd";
+import {
+  SettingOutlined,
+  SolutionOutlined,
+  TagOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+} from "@ant-design/icons";
+import styles from "./styles/style.module.css";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
+const { Header, Content, Footer } = Layout;
 
 export default function Home() {
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
   return (
     <>
       <Head>
@@ -15,6 +29,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Content style={{ padding: "0 50px" }}>
+        <Breadcrumb style={{ margin: "16px 0" }}></Breadcrumb>
+        <div
+          className="site-layout-content"
+          style={{ background: colorBgContainer }}
+        >
+          <User />
+        </div>
+      </Content>
+      
     </>
   );
 }
