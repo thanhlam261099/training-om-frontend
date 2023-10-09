@@ -5,10 +5,14 @@ import { notification } from "antd";
 
 type TProps = {
   loadUser: () => Promise<void>;
+  userId: string;
+  isOpen: boolean;
+  onClose: () => void;
 };
 
-const ModalCreateUser = (props: TProps) => {
+const ModalEditUser = (props: TProps) => {
   type Field = {
+    id: string;
     username: string;
     email: string;
     roles: Roles[];
@@ -24,15 +28,6 @@ const ModalCreateUser = (props: TProps) => {
 
   const [form] = Form.useForm();
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    form.resetFields();
-  };
-
   const handleSaveUser = async (value: Field) => {
     try {
       const roles = value.roles.map((role) => ({ id: role }));
@@ -43,7 +38,15 @@ const ModalCreateUser = (props: TProps) => {
         roles: roles,
       };
 
-      await instance.post("/users/create", payload);
+      const [values] = await Promise.all([form.validateFields()]);
+      const { email, userName, roleName } = values;
+
+      await instance.put(`/users/${value.id}`, {
+        ...value,
+        username: userName,
+        email: email,
+        roles: roleName,
+      });
 
       setIsModalOpen(false);
       form.resetFields();
@@ -78,13 +81,10 @@ const ModalCreateUser = (props: TProps) => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Add
-      </Button>
       <Modal
         title="Create User"
-        open={isModalOpen}
-        onCancel={handleCancel}
+        open={props.isOpen}
+        onCancel={props.onClose}
         maskClosable={false}
         footer={null}
       >
@@ -144,4 +144,4 @@ const ModalCreateUser = (props: TProps) => {
   );
 };
 
-export default ModalCreateUser;
+export default ModalEditUser;

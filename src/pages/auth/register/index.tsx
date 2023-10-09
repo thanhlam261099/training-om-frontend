@@ -1,5 +1,5 @@
 import Layout from "@/components/layout";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, notification } from "antd";
 import { useRouter } from "next/router";
 import instance from "../../utils/axios";
 import Link from "next/link";
@@ -22,7 +22,11 @@ const LoginForm = () => {
       });
       console.log(response.data);
       // alert("ok");
-      router.push("/login");
+      router.push("/auth/login");
+      notification.success({
+        message: "Register successfully",
+        description: "The user has been register successfully.",
+      });
     } catch (error) {
       console.log(error);
       alert("eror");

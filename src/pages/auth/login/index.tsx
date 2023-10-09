@@ -1,9 +1,9 @@
 import Layout from "@/components/layout";
 import { GoogleOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, notification } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import instance from "../../utils/axios";
 import { setCookie } from "cookies-next";
 import styles from "../style/auth.module.css";
@@ -26,10 +26,13 @@ const LoginForm = () => {
 
       return token;
     } catch (error) {
-      alert("eror");
-      throw error;
+      notification.error({
+        message: "Error",
+        description: "Invalid email or password",
+      });
     }
   }, []);
+
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -54,7 +57,13 @@ const LoginForm = () => {
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
+            rules={[
+              {
+                type: "email",
+                required: true,
+                message: "Please input valid email!",
+              },
+            ]}
           >
             <Input />
           </Form.Item>

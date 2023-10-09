@@ -23,3 +23,8 @@
   justify-content: center;
   color: red;
 }
+
+.ant-table-thead > tr > th {
+  background: #e6f7ff !important;
+  color: #000000d9 !important;
+}
